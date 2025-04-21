@@ -1,6 +1,6 @@
 """
 title: AWS Bedrock Knowledge Base Function
-author: Roo
+author: Aaron Bolton
 version: 0.1.0
 description: Integration with AWS Bedrock Knowledge Base for OpenWebUI
 This module defines a Pipe class that utilizes AWS Bedrock Knowledge Base for retrieving information

@@ -279,13 +279,13 @@ async def test_kb_query(query, debug=False):
 async def run_movie_queries():
     """Run a series of movie-related queries to test the knowledge base"""
     movie_queries = [
-        "list all star trek movies"
-        # "Tell me about The Godfather movie",
-        # "Who directed Inception?",
-        # "What is the plot of Pulp Fiction?",
-        # "List some popular action movies",
-        # "Who starred in The Shawshank Redemption?",
-        # "movie"  # Simple query to match any movie content
+        "list all star trek movies",
+        "Tell me about The Godfather movie",
+        "Who directed Inception?",
+        "What is the plot of Pulp Fiction?",
+        "List some popular action movies",
+        "Who starred in The Shawshank Redemption?",
+        "movie"  # Simple query to match any movie content
     ]
     
     results = []
