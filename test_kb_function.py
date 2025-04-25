@@ -214,7 +214,9 @@ async def test_kb_query(query, debug=False):
     pipe.valves.knowledge_base_id = os.getenv('KNOWLEDGE_BASE_ID')
     
     # Optional: Configure additional parameters from environment variables
+    # Use a model that supports on-demand throughput (Nova Pro requires an inference profile)
     pipe.valves.model_id = os.getenv('MODEL_ID', "anthropic.claude-3-sonnet-20240229-v1:0")
+    
     pipe.valves.number_of_results = int(os.getenv('NUMBER_OF_RESULTS', 10))  # Increase number of results
     
     # Create a mock request body with the query
@@ -261,6 +263,20 @@ async def test_kb_query(query, debug=False):
     
     # Call the pipe function
     logger.info("Calling pipe function")
+    
+    # Debug the model request format
+    try:
+        # Get a sample prompt
+        sample_prompt = "This is a test prompt"
+        model_family = pipe._get_model_family()
+        request_body = pipe._get_model_request_body(sample_prompt)
+        
+        logger.info(f"Model family detected: {model_family}")
+        logger.info(f"Request body format for {pipe.valves.model_id}:")
+        logger.info(json.dumps(request_body, indent=2))
+    except Exception as e:
+        logger.error(f"Error generating request body: {str(e)}")
+    
     response = await pipe.pipe(body)
     
     # Print the response
@@ -279,13 +295,13 @@ async def test_kb_query(query, debug=False):
 async def run_movie_queries():
     """Run a series of movie-related queries to test the knowledge base"""
     movie_queries = [
-        "list all star trek movies",
-        "Tell me about The Godfather movie",
-        "Who directed Inception?",
-        "What is the plot of Pulp Fiction?",
-        "List some popular action movies",
-        "Who starred in The Shawshank Redemption?",
-        "movie"  # Simple query to match any movie content
+        "list all star trek movies"
+        # "Tell me about The Godfather movie",
+        # "Who directed Inception?",
+        # "What is the plot of Pulp Fiction?",
+        # "List some popular action movies",
+        # "Who starred in The Shawshank Redemption?",
+        # "movie"  # Simple query to match any movie content
     ]
     
     results = []
